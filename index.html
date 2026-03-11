@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNI7 — Sistemas de Informação & ADS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --azul:     #1a2e5a;
+      --azul2:    #1e3a72;
+      --azul3:    #2b4e99;
+      --dourado:  #c8922a;
+      --gold2:    #e0a830;
+      --branco:   #ffffff;
+      --cinza-bg: #f5f7fb;
+      --cinza2:   #eef1f8;
+      --borda:    #dce3ef;
+      --texto:    #1a1a2e;
+      --muted:    #637085;
+      --green:    #16a34a;
+      --T: 'Montserrat', sans-serif;
+      --B: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--B); color: var(--texto); background: var(--branco); overflow-x: hidden; }
+    a { text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--azul); padding: 0.4rem 0; }
+    .topbar-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .topbar-left { color: rgba(255,255,255,0.65); font-size: 0.72rem; font-family: var(--T); font-weight: 500; }
+    .topbar-left span { color: var(--gold2); margin-right: 0.3rem; }
+    .topbar-right { display: flex; gap: 1.5rem; }
+    .topbar-right a { color: rgba(255,255,255,0.65); font-size: 0.72rem; font-family: var(--T); font-weight: 600; letter-spacing: 0.04em; transition: color 0.2s; }
+    .topbar-right a:hover { color: var(--gold2); }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--branco); position: sticky; top: 0; z-index: 200;
+      border-bottom: 3px solid var(--dourado);
+      box-shadow: 0 2px 16px rgba(26,46,90,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-mark {
+      background: var(--azul); color: var(--branco);
+      font-family: var(--T); font-weight: 900; font-size: 1.4rem;
+      padding: 0.28rem 0.65rem; letter-spacing: -0.02em;
+    }
+    .logo-mark em { font-style: normal; color: var(--gold2); }
+    .logo-text { font-family: var(--T); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--azul); line-height: 1.4; }
+    .nav-links { display: flex; list-style: none; height: 68px; }
+    .nav-links li { display: flex; }
+    .nav-links a {
+      display: flex; align-items: center;
+      color: var(--azul); font-family: var(--T); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; padding: 0 1rem;
+      border-bottom: 3px solid transparent; margin-bottom: -3px;
+      transition: color .2s, border-color .2s;
+    }
+    .nav-links a:hover { color: var(--dourado); border-bottom-color: var(--dourado); }
+    .nav-btn {
+      background: var(--dourado); color: var(--branco) !important;
+      border-radius: 5px; border-bottom: none !important; margin-bottom: 0 !important;
+      padding: 0 1.4rem !important; height: 40px; align-self: center;
+      transition: background .2s !important;
+    }
+    .nav-btn:hover { background: var(--gold2) !important; color: var(--branco) !important; border-bottom-color: transparent !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(130deg, var(--azul) 0%, #1e3a72 55%, #1a3580 100%);
+      color: var(--branco); padding: 7rem 2rem 5rem; overflow: hidden; position: relative;
+    }
+    .hero-dots {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 80% 80% at 80% 40%, black 20%, transparent 80%);
+    }
+    .hero-glow {
+      position: absolute; right: 5%; top: 10%;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,146,42,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(200,146,42,0.2); border: 1px solid rgba(200,146,42,0.45);
+      color: var(--gold2); font-family: var(--T); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem;
+      border-radius: 100px; margin-bottom: 1.5rem; width: fit-content;
+      animation: up .6s ease both;
+    }
+    .hero h1 {
+      font-family: var(--T); font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.3rem;
+      animation: up .65s .08s ease both;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold2); }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.75; color: rgba(255,255,255,0.78);
+      max-width: 520px; margin-bottom: 2.5rem;
+      animation: up .65s .15s ease both;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: up .65s .22s ease both; }
+    .btn-gold {
+      background: var(--dourado); color: var(--branco);
+      font-family: var(--T); font-weight: 800; font-size: 0.8rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 5px; display: inline-block;
+      transition: background .2s, transform .2s;
+      box-shadow: 0 4px 20px rgba(200,146,42,0.4);
+    }
+    .btn-gold:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-ghost-w {
+      background: transparent; color: var(--branco);
+      border: 2px solid rgba(255,255,255,0.4); font-family: var(--T); font-weight: 700;
+      font-size: 0.8rem; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 5px; display: inline-block;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-ghost-w:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); }
+
+    /* hero stats card */
+    .hero-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px; padding: 2rem; backdrop-filter: blur(8px);
+      animation: up .7s .3s ease both;
+    }
+    .hero-card-title {
+      font-family: var(--T); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 1.2rem;
+    }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-box {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 1.1rem; text-align: center;
+    }
+    .stat-num { font-family: var(--T); font-weight: 900; font-size: 1.8rem; color: var(--gold2); letter-spacing: -0.03em; line-height: 1; }
+    .stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.3rem; font-family: var(--T); font-weight: 600; }
+    .hero-card-divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 1.2rem 0; }
+    .hero-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .hero-tag-item {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8); font-family: var(--T); font-size: 0.72rem; font-weight: 600;
+      padding: 0.3rem 0.75rem; border-radius: 100px;
+    }
+
+    /* ── SEÇÃO GENÉRICA ── */
+    section { padding: 5rem 2rem; }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    .sec-label {
+      font-family: var(--T); font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--dourado);
+      margin-bottom: 0.6rem; display: block;
+    }
+    .sec-title {
+      font-family: var(--T); font-weight: 900; color: var(--azul);
+      font-size: clamp(1.7rem, 3vw, 2.3rem); letter-spacing: -0.025em;
+      line-height: 1.15; margin-bottom: 0.8rem;
+    }
+    .sec-sub { color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 560px; }
+    .sec-head { margin-bottom: 3.5rem; }
+    .sec-head-center { text-align: center; }
+    .sec-head-center .sec-sub { margin: 0 auto; }
+
+    /* ── PROJETOS ── */
+    #projetos { background: var(--cinza-bg); }
+    .projetos-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .projeto-card {
+      background: var(--branco); border: 1px solid var(--borda);
+      border-radius: 12px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      display: flex; flex-direction: column;
+    }
+    .projeto-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(26,46,90,0.12); }
+    .projeto-visual {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; position: relative; overflow: hidden;
+    }
+    .projeto-card:nth-child(1) .projeto-visual { background: linear-gradient(135deg, #1a2e5a, #2b4e99); }
+    .projeto-card:nth-child(2) .projeto-visual { background: linear-gradient(135deg, #16425b, #1e6e9f); }
+    .projeto-card:nth-child(3) .projeto-visual { background: linear-gradient(135deg, #3a1a5a, #7b2fb5); }
+    .projeto-card:nth-child(4) .projeto-visual { background: linear-gradient(135deg, #1a3a2a, #2d8a5e); }
+    .projeto-card:nth-child(5) .projeto-visual { background: linear-gradient(135deg, #5a2a1a, #c8632a); }
+    .projeto-card:nth-child(6) .projeto-visual { background: linear-gradient(135deg, #1a2a4a, #c8922a); }
+    .projeto-tipo {
+      position: absolute; top: 0.8rem; left: 0.8rem;
+      background: rgba(0,0,0,0.35); color: var(--branco);
+      font-family: var(--T); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.65rem; border-radius: 100px; backdrop-filter: blur(4px);
+    }
+    .projeto-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+    .projeto-body h4 { font-family: var(--T); font-size: 0.95rem; font-weight: 800; color: var(--azul); margin-bottom: 0.5rem; line-height: 1.3; }
+    .projeto-body p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+    .projeto-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tech-tag {
+      background: var(--cinza2); color: var(--azul3);
+      font-family: var(--T); font-size: 0.65rem; font-weight: 700;
+      padding: 0.25rem 0.6rem; border-radius: 4px; letter-spacing: 0.04em;
+    }
+
+    /* ── PRÁTICA NAS AULAS ── */
+    #pratica { background: var(--branco); }
+    .pratica-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .pratica-items { display: flex; flex-direction: column; gap: 1.5rem; }
+    .pratica-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.4rem; border: 1px solid var(--borda); border-radius: 10px;
+      transition: border-color .2s, box-shadow .2s; cursor: default;
+    }
+    .pratica-item:hover { border-color: var(--azul); box-shadow: 0 4px 20px rgba(26,46,90,0.07); }
+    .pratica-icon {
+      width: 48px; height: 48px; border-radius: 10px; background: var(--cinza-bg);
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      flex-shrink: 0; border: 1px solid var(--borda);
+    }
+    .pratica-item h4 { font-family: var(--T); font-size: 0.9rem; font-weight: 800; color: var(--azul); margin-bottom: 0.35rem; }
+    .pratica-item p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    .pratica-visual {
+      background: linear-gradient(135deg, var(--azul), var(--azul3));
+      border-radius: 16px; padding: 2.5rem;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .pratica-visual-title {
+      font-family: var(--T); font-size: 0.7rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 0.5rem;
+    }
+    .semestre-row {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 1rem 1.2rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .sem-num {
+      font-family: var(--T); font-weight: 900; font-size: 1.5rem; color: var(--gold2);
+      line-height: 1; flex-shrink: 0; width: 28px; text-align: center;
+    }
+    .sem-title { font-family: var(--T); font-size: 0.82rem; font-weight: 700; color: var(--branco); margin-bottom: 0.3rem; }
+    .sem-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .sem-tag {
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);
+      font-family: var(--T); font-size: 0.65rem; font-weight: 600;
+      padding: 0.2rem 0.55rem; border-radius: 4px;
+    }
+
+    /* ── HACKATHONS ── */
+    #hackathons { background: var(--azul); color: var(--branco); }
+    #hackathons .sec-label { color: var(--gold2); }
+    #hackathons .sec-title { color: var(--branco); }
+    #hackathons .sec-sub { color: rgba(255,255,255,0.7); }
+    .hack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .hack-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 2rem;
+      transition: background .2s, border-color .2s;
+    }
+    .hack-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(200,146,42,0.4); }
+    .hack-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .hack-card h4 { font-family: var(--T); font-weight: 800; font-size: 1rem; margin-bottom: 0.6rem; color: var(--branco); }
+    .hack-card p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.65; }
+    .hack-badge {
+      display: inline-block; margin-top: 1rem;
+      background: rgba(200,146,42,0.2); border: 1px solid rgba(200,146,42,0.4);
+      color: var(--gold2); font-family: var(--T); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 100px;
+    }
+
+    /* ── LABORATÓRIOS ── */
+    #laboratorios { background: var(--cinza-bg); }
+    .labs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    .lab-card {
+      background: var(--branco); border: 1px solid var(--borda);
+      border-radius: 10px; padding: 1.8rem 1.4rem; text-align: center;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .lab-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,46,90,0.1); }
+    .lab-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .lab-card h4 { font-family: var(--T); font-size: 0.88rem; font-weight: 800; color: var(--azul); margin-bottom: 0.4rem; }
+    .lab-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── MERCADO ── */
+    #mercado { background: var(--branco); }
+    .mercado-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .empresas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .empresa-pill {
+      background: var(--cinza-bg); border: 1px solid var(--borda);
+      border-radius: 8px; padding: 1rem;
+      text-align: center; font-family: var(--T); font-size: 0.8rem; font-weight: 700;
+      color: var(--azul); transition: border-color .2s;
+    }
+    .empresa-pill:hover { border-color: var(--azul); }
+    .empresa-pill .ep-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .salarios { display: flex; flex-direction: column; gap: 1rem; }
+    .sal-item {
+      background: var(--cinza-bg); border: 1px solid var(--borda);
+      border-radius: 10px; padding: 1.2rem 1.4rem;
+      display: flex; align-items: center; gap: 1.2rem;
+    }
+    .sal-cargo { font-family: var(--T); font-size: 0.85rem; font-weight: 700; color: var(--azul); flex: 1; }
+    .sal-faixa {
+      font-family: var(--T); font-size: 0.82rem; font-weight: 800; color: var(--green);
+      white-space: nowrap;
+    }
+    .sal-bar-wrap { flex: 1; background: var(--cinza2); border-radius: 100px; height: 6px; }
+    .sal-bar { height: 6px; border-radius: 100px; background: linear-gradient(90deg, var(--azul), var(--azul3)); }
+
+    /* ── DEPOIMENTOS ── */
+    #depoimentos { background: var(--cinza-bg); }
+    .dep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .dep-card {
+      background: var(--branco); border: 1px solid var(--borda); border-radius: 12px;
+      padding: 1.8rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .dep-stars { color: var(--dourado); font-size: 0.9rem; letter-spacing: 0.05em; }
+    .dep-text { font-size: 0.88rem; line-height: 1.7; color: var(--muted); flex: 1; font-style: italic; }
+    .dep-author { display: flex; align-items: center; gap: 0.8rem; padding-top: 1rem; border-top: 1px solid var(--borda); }
+    .dep-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--azul); display: flex; align-items: center; justify-content: center;
+      font-family: var(--T); font-weight: 800; font-size: 0.9rem; color: var(--branco); flex-shrink: 0;
+    }
+    .dep-name { font-family: var(--T); font-size: 0.82rem; font-weight: 700; color: var(--azul); }
+    .dep-curso { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── CTA ── */
+    #inscricao {
+      background: linear-gradient(135deg, var(--azul) 0%, #1e3a72 60%, var(--azul3) 100%);
+      text-align: center; color: var(--branco); padding: 6rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    #inscricao::before {
+      content: ''; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 800px; height: 400px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(200,146,42,0.15) 0%, transparent 70%);
+    }
+    #inscricao .sec-label { color: var(--gold2); }
+    #inscricao .sec-title { color: var(--branco); margin-bottom: 1rem; }
+    #inscricao .sec-sub { color: rgba(255,255,255,0.72); margin: 0 auto 2.5rem; }
+    .cta-cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .cta-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px; padding: 2rem 2.5rem; min-width: 260px;
+      transition: background .2s, transform .2s;
+    }
+    .cta-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
+    .cta-card-label { font-family: var(--T); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold2); margin-bottom: 0.5rem; }
+    .cta-card h3 { font-family: var(--T); font-weight: 900; font-size: 1.15rem; margin-bottom: 0.4rem; }
+    .cta-card p { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
+    .btn-cta {
+      display: block; text-align: center;
+      background: var(--dourado); color: var(--branco);
+      font-family: var(--T); font-weight: 800; font-size: 0.78rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.85rem 1.5rem; border-radius: 6px;
+      transition: background .2s, transform .2s;
+    }
+    .btn-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer { background: #0f1a33; color: rgba(255,255,255,0.55); padding: 3rem 2rem 1.5rem; }
+    .foot-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+      padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .foot-brand .logo-mark { font-size: 1.2rem; margin-bottom: 0.8rem; display: inline-block; }
+    .foot-brand p { font-size: 0.82rem; line-height: 1.7; }
+    .foot-col h5 { font-family: var(--T); font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold2); margin-bottom: 1rem; }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .foot-col a { color: rgba(255,255,255,0.55); font-size: 0.82rem; transition: color .2s; }
+    .foot-col a:hover { color: var(--gold2); }
+    .foot-bottom { max-width: 1200px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .foot-bottom p { font-size: 0.75rem; }
+
+    /* ── ANIMAÇÕES ── */
+    @keyframes up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .labs-grid { grid-template-columns: repeat(2,1fr); }
+      .foot-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .projetos-grid { grid-template-columns: 1fr 1fr; }
+      .hack-grid { grid-template-columns: 1fr; }
+      .pratica-grid { grid-template-columns: 1fr; }
+      .mercado-inner { grid-template-columns: 1fr; }
+      .dep-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 520px) {
+      .projetos-grid { grid-template-columns: 1fr; }
+      .labs-grid { grid-template-columns: 1fr 1fr; }
+      .foot-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .cta-card { min-width: unset; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-left"><span>📍</span> Fortaleza, CE — Fone: (85) 4006-7676</span>
+    <div class="topbar-right">
+      <a href="#">Graduação</a>
+      <a href="#">Mestrado</a>
+      <a href="#">Blog</a>
+      <a href="#faq">FAQ</a>
+      <a href="#">Portal do Aluno</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">UNI<em>7</em></div>
+      <div class="logo-text">Centro Universitário<br>7 de Setembro</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#pratica">Na prática</a></li>
+      <li><a href="#laboratorios">Laboratórios</a></li>
+      <li><a href="#mercado">Mercado</a></li>
+      <li><a href="#depoimentos">Alunos</a></li>
+      <li><a href="#inscricao" class="nav-btn">Inscreva-se</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🚀 Tecnologia da Informação · UNI7</div>
+      <h1>Aqui você aprende<br><em>fazendo de verdade</em></h1>
+      <p class="hero-desc">Projetos reais, laboratórios de ponta, professores que atuam no mercado. Nos cursos de SI e ADS da UNI7, a teoria sempre vem junto com a prática.</p>
+      <div class="hero-btns">
+        <a href="#projetos" class="btn-gold">Ver projetos dos alunos</a>
+        <a href="#inscricao" class="btn-ghost-w">Garantir minha vaga</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-title">📊 Nossos números</div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-num">+5.500</div>
+          <div class="stat-label">Formados</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">+100</div>
+          <div class="stat-label">Docentes</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">25</div>
+          <div class="stat-label">Anos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">MEC ✓</div>
+          <div class="stat-label">Reconhecido</div>
+        </div>
+      </div>
+      <hr class="hero-card-divider"/>
+      <div class="hero-card-tags">
+        <span class="hero-tag-item">🏆 Hackathons</span>
+        <span class="hero-tag-item">🏢 Empresas parceiras</span>
+        <span class="hero-tag-item">🔬 Iniciação científica</span>
+        <span class="hero-tag-item">💻 Labs equipados</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">O que nossos alunos constroem</span>
+      <h2 class="sec-title">Projetos reais,<br>feitos por alunos</h2>
+      <p class="sec-sub">Durante o curso, você desenvolve sistemas e aplicações com tecnologias do mercado — não só exercícios, mas projetos com impacto real.</p>
+    </div>
+    <div class="projetos-grid">
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          📱
+          <span class="projeto-tipo">App Mobile</span>
+        </div>
+        <div class="projeto-body">
+          <h4>App de gestão de filas para clínicas</h4>
+          <p>Desenvolvido para uma clínica parceira, o app reduz o tempo de espera e digitaliza o processo de triagem.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">React Native</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Firebase</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          🤖
+          <span class="projeto-tipo">IA & Dados</span>
+        </div>
+        <div class="projeto-body">
+          <h4>Sistema de detecção de fraudes bancárias</h4>
+          <p>Projeto de iniciação científica que usa machine learning para identificar padrões suspeitos em transações.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Scikit-learn</span>
+            <span class="tech-tag">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          🌐
+          <span class="projeto-tipo">Sistema Web</span>
+        </div>
+        <div class="projeto-body">
+          <h4>Plataforma EAD para escola pública</h4>
+          <p>Parceria com secretaria municipal de educação para criar uma plataforma de ensino a distância acessível.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Django</span>
+            <span class="tech-tag">AWS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          📊
+          <span class="projeto-tipo">Hackathon 🏆</span>
+        </div>
+        <div class="projeto-body">
+          <h4>Dashboard de monitoramento ambiental</h4>
+          <p>1º lugar no Hackathon Nordeste Tech 2024. Sistema de visualização de dados de sensores IoT em tempo real.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">Vue.js</span>
+            <span class="tech-tag">MQTT</span>
+            <span class="tech-tag">Grafana</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          🛒
+          <span class="projeto-tipo">E-commerce</span>
+        </div>
+        <div class="projeto-body">
+          <h4>Marketplace para artesãos cearenses</h4>
+          <p>Plataforma de venda conectando artesãos locais a compradores, com pagamento integrado e gestão de estoque.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">Next.js</span>
+            <span class="tech-tag">Stripe</span>
+            <span class="tech-tag">MongoDB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card">
+        <div class="projeto-visual">
+          🔐
+          <span class="projeto-tipo">Segurança</span>
+        </div>
+        <div class="projeto-body">
+          <h4>Ferramenta de auditoria de vulnerabilidades</h4>
+          <p>Pesquisa publicada em conferência nacional. Scanner automatizado de brechas de segurança em aplicações web.</p>
+          <div class="projeto-techs">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">OWASP</span>
+            <span class="tech-tag">Docker</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRÁTICA -->
+<section id="pratica">
+  <div class="wrap">
+    <div class="pratica-grid">
+      <div>
+        <div class="sec-head">
+          <span class="sec-label">Como funciona na prática</span>
+          <h2 class="sec-title">Do 1º ao último semestre, você está codando</h2>
+          <p class="sec-sub">Nada de só teoria. Cada semestre tem disciplinas práticas, projetos integradores e desafios reais com empresas.</p>
+        </div>
+        <div class="pratica-items">
+          <div class="pratica-item">
+            <div class="pratica-icon">🎯</div>
+            <div>
+              <h4>Projetos integradores semestrais</h4>
+              <p>Todo semestre, equipes resolvem um desafio real proposto por empresas parceiras, com apresentação e feedback profissional.</p>
+            </div>
+          </div>
+          <div class="pratica-item">
+            <div class="pratica-icon">👨‍💼</div>
+            <div>
+              <h4>Professores que atuam no mercado</h4>
+              <p>Mais de 70% do corpo docente trabalha ativamente em empresas de tecnologia, trazendo casos reais para a sala de aula.</p>
+            </div>
+          </div>
+          <div class="pratica-item">
+            <div class="pratica-icon">🏢</div>
+            <div>
+              <h4>Estágio desde o 3º semestre</h4>
+              <p>Parcerias com mais de 50 empresas de TI em Fortaleza garantem oportunidades de estágio ainda durante o curso.</p>
+            </div>
+          </div>
+          <div class="pratica-item">
+            <div class="pratica-icon">🔬</div>
+            <div>
+              <h4>Iniciação científica e pesquisa</h4>
+              <p>Grupos de pesquisa ativos nas áreas de IA, segurança da informação e sistemas distribuídos com bolsas disponíveis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pratica-visual">
+        <div class="pratica-visual-title">📚 Jornada do aluno — ADS</div>
+        <div class="semestre-row">
+          <div class="sem-num">1</div>
+          <div>
+            <div class="sem-title">Fundamentos e lógica</div>
+            <div class="sem-tags"><span class="sem-tag">Algoritmos</span><span class="sem-tag">Lógica</span><span class="sem-tag">HTML/CSS</span></div>
+          </div>
+        </div>
+        <div class="semestre-row">
+          <div class="sem-num">2</div>
+          <div>
+            <div class="sem-title">Desenvolvimento Web</div>
+            <div class="sem-tags"><span class="sem-tag">JavaScript</span><span class="sem-tag">React</span><span class="sem-tag">Banco de Dados</span></div>
+          </div>
+        </div>
+        <div class="semestre-row">
+          <div class="sem-num">3</div>
+          <div>
+            <div class="sem-title">Back-end & APIs</div>
+            <div class="sem-tags"><span class="sem-tag">Node.js</span><span class="sem-tag">REST API</span><span class="sem-tag">1º Estágio</span></div>
+          </div>
+        </div>
+        <div class="semestre-row">
+          <div class="sem-num">4</div>
+          <div>
+            <div class="sem-title">Mobile & Cloud</div>
+            <div class="sem-tags"><span class="sem-tag">React Native</span><span class="sem-tag">AWS</span><span class="sem-tag">DevOps</span></div>
+          </div>
+        </div>
+        <div class="semestre-row">
+          <div class="sem-num">5</div>
+          <div>
+            <div class="sem-title">Projeto Final + TCC</div>
+            <div class="sem-tags"><span class="sem-tag">Projeto Completo</span><span class="sem-tag">Empresa Real</span><span class="sem-tag">Formatura 🎓</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HACKATHONS -->
+<section id="hackathons">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">Competições e eventos</span>
+      <h2 class="sec-title" style="color:var(--branco);">Nossos alunos competem<br>e <em style="font-style:normal;color:var(--gold2);">vencem</em></h2>
+      <p class="sec-sub">Participamos dos principais hackathons e maratonas de programação do Brasil. Experiência que nenhuma sala de aula substitui.</p>
+    </div>
+    <div class="hack-grid">
+      <div class="hack-card">
+        <div class="hack-icon">⚡</div>
+        <h4>Hackathon Nordeste Tech</h4>
+        <p>Evento anual de 48 horas com desafios propostos por empresas. Nossos times chegaram ao pódio nas últimas 3 edições.</p>
+        <span class="hack-badge">🏆 1º lugar 2024</span>
+      </div>
+      <div class="hack-card">
+        <div class="hack-icon">🖥️</div>
+        <h4>Maratona de Programação ICPC</h4>
+        <p>Competição universitária global de algoritmos. A UNI7 classifica times todo ano para a fase regional brasileira.</p>
+        <span class="hack-badge">Fase Regional</span>
+      </div>
+      <div class="hack-card">
+        <div class="hack-icon">🌱</div>
+        <h4>Hackathon de Inovação Social</h4>
+        <p>Parceria com prefeitura e ONGs locais para criar soluções tecnológicas para problemas reais da cidade de Fortaleza.</p>
+        <span class="hack-badge">Edição anual</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LABORATÓRIOS -->
+<section id="laboratorios">
+  <div class="wrap">
+    <div class="sec-head sec-head-center">
+      <span class="sec-label">Estrutura</span>
+      <h2 class="sec-title">Laboratórios feitos para você aprender mais</h2>
+      <p class="sec-sub">Ambientes equipados com as mesmas ferramentas que você vai encontrar no mercado de trabalho.</p>
+    </div>
+    <div class="labs-grid">
+      <div class="lab-card">
+        <div class="lab-icon">💻</div>
+        <h4>Lab de Desenvolvimento</h4>
+        <p>Computadores de alta performance, IDEs profissionais e repositórios git configurados.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-icon">🔒</div>
+        <h4>Lab de Cibersegurança</h4>
+        <p>Ambiente isolado para testes de invasão, forense digital e análise de malware.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-icon">🤖</div>
+        <h4>Lab de Inteligência Artificial</h4>
+        <p>GPUs dedicadas para treinamento de modelos de machine learning e deep learning.</p>
+      </div>
+      <div class="lab-card">
+        <div class="lab-icon">☁️</div>
+        <h4>Lab de Cloud & Redes</h4>
+        <p>Simuladores de redes, servidores físicos e créditos em plataformas de nuvem (AWS, Azure).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCADO -->
+<section id="mercado">
+  <div class="wrap">
+    <div class="mercado-inner">
+      <div>
+        <span class="sec-label">Onde nossos alunos chegam</span>
+        <h2 class="sec-title">Formados contratados pelas melhores empresas</h2>
+        <p class="sec-sub" style="margin-bottom:2rem;">Parcerias ativas com empresas de tecnologia locais e nacionais que recrutam diretamente da UNI7.</p>
+        <div class="empresas-grid">
+          <div class="empresa-pill"><div class="ep-icon">🏦</div>Fintechs</div>
+          <div class="empresa-pill"><div class="ep-icon">🏥</div>Healthtechs</div>
+          <div class="empresa-pill"><div class="ep-icon">🛒</div>E-commerce</div>
+          <div class="empresa-pill"><div class="ep-icon">🏛️</div>Gov. Digital</div>
+          <div class="empresa-pill"><div class="ep-icon">🚀</div>Startups</div>
+          <div class="empresa-pill"><div class="ep-icon">🌐</div>Consultorias</div>
+        </div>
+      </div>
+      <div>
+        <span class="sec-label" style="margin-bottom:1.5rem;display:block;">Faixa salarial após formação</span>
+        <div class="salarios">
+          <div class="sal-item">
+            <div class="sal-cargo">Desenvolvedor Júnior</div>
+            <div class="sal-bar-wrap"><div class="sal-bar" style="width:45%"></div></div>
+            <div class="sal-faixa">R$ 3–5k</div>
+          </div>
+          <div class="sal-item">
+            <div class="sal-cargo">Desenvolvedor Pleno</div>
+            <div class="sal-bar-wrap"><div class="sal-bar" style="width:65%"></div></div>
+            <div class="sal-faixa">R$ 6–10k</div>
+          </div>
+          <div class="sal-item">
+            <div class="sal-cargo">Analista de Sistemas</div>
+            <div class="sal-bar-wrap"><div class="sal-bar" style="width:60%"></div></div>
+            <div class="sal-faixa">R$ 5–9k</div>
+          </div>
+          <div class="sal-item">
+            <div class="sal-cargo">Desenvolvedor Sênior</div>
+            <div class="sal-bar-wrap"><div class="sal-bar" style="width:90%"></div></div>
+            <div class="sal-faixa">R$ 12–20k</div>
+          </div>
+          <div class="sal-item">
+            <div class="sal-cargo">Especialista em IA</div>
+            <div class="sal-bar-wrap"><div class="sal-bar" style="width:85%"></div></div>
+            <div class="sal-faixa">R$ 10–18k</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="wrap">
+    <div class="sec-head sec-head-center">
+      <span class="sec-label">Quem já passou por aqui</span>
+      <h2 class="sec-title">O que os alunos falam</h2>
+      <p class="sec-sub">Histórias reais de quem construiu a carreira na UNI7.</p>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"O projeto integrador do 4º semestre foi o que me abriu as portas para o meu primeiro emprego. Levei o projeto para a entrevista e fui contratado na hora."</p>
+        <div class="dep-author">
+          <div class="dep-avatar">LF</div>
+          <div>
+            <div class="dep-name">Lucas Ferreira</div>
+            <div class="dep-curso">Formado em ADS · Dev Pleno na Zup</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Participei do hackathon no 2º semestre e ganhei. Isso me deu confiança pra continuar. Hoje estou fazendo mestrado e pesquisando IA."</p>
+        <div class="dep-author">
+          <div class="dep-avatar">AM</div>
+          <div>
+            <div class="dep-name">Ana Melo</div>
+            <div class="dep-curso">Formada em SI · Mestranda em IA</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Os professores são profissionais do mercado, então você aprende o que realmente é usado lá fora. Nada de conteúdo desatualizado."</p>
+        <div class="dep-author">
+          <div class="dep-avatar">RC</div>
+          <div>
+            <div class="dep-name">Rafael Costa</div>
+            <div class="dep-curso">Cursando ADS · Estagiário no CESAR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="inscricao">
+  <div style="position:relative;z-index:1;text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <span class="sec-label">Próximo passo</span>
+    <h2 class="sec-title" style="color:var(--branco);">Qual curso é o seu?</h2>
+    <p class="sec-sub" style="color:rgba(255,255,255,0.72);margin:0 auto;">As vagas são limitadas. Escolha seu caminho e garanta sua vaga nos cursos de tecnologia mais completos do Ceará.</p>
+  </div>
+  <div class="cta-cards">
+    <div class="cta-card">
+      <div class="cta-card-label">Bacharelado · 4 anos</div>
+      <h3>Sistemas de Informação</h3>
+      <p>Tecnologia + gestão. Para quem quer pensar os sistemas do futuro.</p>
+      <a href="#" class="btn-cta">Inscrever em SI →</a>
+    </div>
+    <div class="cta-card">
+      <div class="cta-card-label">Tecnólogo · 2,5 anos</div>
+      <h3>An. e Des. de Sistemas</h3>
+      <p>Foco em código. Para quem quer entrar no mercado mais rápido.</p>
+      <a href="#" class="btn-cta">Inscrever em ADS →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="logo-mark" style="font-family:'Montserrat',sans-serif;font-weight:900;display:inline-block;margin-bottom:0.8rem;">UNI<em style="font-style:normal;color:var(--gold2);">7</em></div>
+      <p>Av. Alm. Maximiano da Fonseca, 1395<br>Eng. Luciano Cavalcante — CEP 60811-020<br>Fortaleza — CE · Fone: (85) 4006-7676</p>
+    </div>
+    <div class="foot-col">
+      <h5>Cursos TI</h5>
+      <ul>
+        <li><a href="#projetos">Sistemas de Informação</a></li>
+        <li><a href="#projetos">An. e Des. de Sistemas</a></li>
+        <li><a href="#">Todos os cursos</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Estudante</h5>
+      <ul>
+        <li><a href="#">Portal do Aluno</a></li>
+        <li><a href="#">Biblioteca</a></li>
+        <li><a href="#laboratorios">Laboratórios</a></li>
+        <li><a href="#">Estágios</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Institucional</h5>
+      <ul>
+        <li><a href="#">Sobre a UNI7</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">Certificação MEC</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 UNI7 — Centro Universitário 7 de Setembro. Todos os direitos reservados.</p>
+    <p>Credenciada pelo MEC</p>
+  </div>
+</footer>
+
+<script>
+  // Smooth active nav
+  const links = document.querySelectorAll('.nav-links a');
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    links.forEach(a => {
+      a.style.color = '';
+      a.style.borderBottomColor = '';
+      if (a.getAttribute('href') === '#' + cur) {
+        a.style.color = 'var(--dourado)';
+        a.style.borderBottomColor = 'var(--dourado)';
+      }
+    });
+  });
+</script>
+</body>
+</html>
